@@ -6,21 +6,19 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Matlab波浪数值模拟 - 我的全新 Hugo 网站</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Matlab波浪数值模拟" />
-<meta property="og:description" content="写在前面：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程" />
+<meta property="og:description" content="根据两篇论文实现的波浪数值模拟，实现了相当真实的静态波浪和动态波浪，Matlab代码可直接调试。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://miraclefish.github.io/first_post/" /><meta property="og:image" content="https://miraclefish.github.io/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-02T17:56:12+08:00" />
-<meta property="article:modified_time" content="2021-11-02T17:56:12+08:00" />
+<meta property="og:url" content="https://miraclefish.github.io/first_post/" /><meta property="og:image" content="https://miraclefish.github.io/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-17T17:56:12+08:00" />
+<meta property="article:modified_time" content="2020-02-17T17:56:12+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://miraclefish.github.io/logo.png"/>
+<meta name="twitter:image" content="https://miraclefish.github.io/images/logo.png"/>
 
 <meta name="twitter:title" content="Matlab波浪数值模拟"/>
-<meta name="twitter:description" content="写在前面：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程"/>
+<meta name="twitter:description" content="根据两篇论文实现的波浪数值模拟，实现了相当真实的静态波浪和动态波浪，Matlab代码可直接调试。"/>
 <meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://miraclefish.github.io/first_post/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/logo.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://miraclefish.github.io/first_post/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -29,12 +27,12 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/miraclefish.github.io\/first_post\/"
-        },"genre": "posts","wordcount":  1809 ,
-        "url": "https:\/\/miraclefish.github.io\/first_post\/","datePublished": "2021-11-02T17:56:12+08:00","dateModified": "2021-11-02T17:56:12+08:00","publisher": {
+        },"genre": "posts","keywords": "船舶与海洋工程, 数值模拟","wordcount":  1819 ,
+        "url": "https:\/\/miraclefish.github.io\/first_post\/","datePublished": "2020-02-17T17:56:12+08:00","dateModified": "2020-02-17T17:56:12+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
-                "name": "xxxx"
+                "name": "Fish"
             },"description": ""
     }
     </script></head>
@@ -43,11 +41,18 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="我的全新 Hugo 网站"></a>
+            <a href="/" title="我的全新 Hugo 网站"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/logo.png"
+        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png"
+        title="/images/logo.png" /><span class="header-title-pre">  </span><span id="id-1" class="typeit"></span></a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <input type="text" placeholder="查找内容" id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw"></i>
                         </a>
@@ -67,7 +72,14 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="我的全新 Hugo 网站"></a>
+                <a href="/" title="我的全新 Hugo 网站"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/logo.png"
+        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png"
+        title="/images/logo.png" /><span class="header-title-pre">  </span><span id="id-2" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -75,7 +87,7 @@
         </div>
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <input type="text" placeholder="查找内容" id="search-input-mobile">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
                             <i class="fas fa-search fa-fw"></i>
                         </a>
@@ -105,10 +117,19 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Matlab波浪数值模拟</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>xxxx</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-02">2021-11-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1809 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="true">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Fish</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/methods/"><i class="far fa-folder fa-fw"></i>Methods</a>&nbsp;<a href="/categories/code/"><i class="far fa-folder fa-fw"></i>Code</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-02-17">2020-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1819 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/first_post/" class="leancloud_visitors" data-flag-title="Matlab波浪数值模拟">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/blogimgwave.svg"
+        data-srcset="/images/blogimgwave.svg, /images/blogimgwave.svg 1.5x, /images/blogimgwave.svg 2x"
+        data-sizes="auto"
+        alt="/images/blogimgwave.svg"
+        title="/images/blogimgwave.svg" /></div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
@@ -127,36 +148,36 @@
     <li><a href="#波浪的动态实现">波浪的动态实现</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p><strong>写在前面</strong>：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程，因为我在网上也没有找到写的比较完整的波浪模拟代码，所以来这里占个坑，希望对大家有所帮助。
-[TOC]</p>
+            </div><div class="content" id="content"><p><strong>写在前面</strong>：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程，因为我在网上也没有找到写的比较完整的波浪模拟代码，所以来这里占个坑，希望对大家有所帮助。</p>
 <h2 id="理论依据">理论依据</h2>
 <p>详情参考这两篇论文：</p>
 <blockquote>
-<p>[1]刘素美. 波浪数值模拟[J]. 科技与创新, 2018(13):132-133.
-[2]赵珂,李茂华,郑建丽,田冠楠. 基于波浪谱的三维随机波浪数值模拟及仿真[J]. 舰船科学技术, 2014,36(02):37-39.</p>
+<p>[1] 刘素美. 波浪数值模拟[J]. 科技与创新, 2018(13):132-133.</p>
+<p>[2] 赵珂,李茂华,郑建丽,田冠楠. 基于波浪谱的三维随机波浪数值模拟及仿真[J]. 舰船科学技术, 2014,36(02):37-39.</p>
 </blockquote>
-<p>简单来说就是，波浪的模拟，可以由不同方向角、不同频率的很多个波，用随机的初始相位初始化后叠加得到。显然，组成波浪的波的频率个数越多、方向角个数越多，能够形成的波就更复杂（直观上也更真实）。
-<strong>先给出波面模型的公式</strong>（根据文献[1]）
+<p>简单来说就是，波浪的模拟，可以由不同方向角、不同频率的很多个波，用随机的初始相位初始化后叠加得到。显然，组成波浪的波的频率个数越多、方向角个数越多，能够形成的波就更复杂（直观上也更真实）。</p>
+<p><strong>先给出波面模型的公式</strong>（根据文献[1]）
 $$ z = \eta(x, y, t)=\sum_{i=1}^{M} \sum_{j=1}^{N} \zeta_{i j} \cos [{k}_{i}\left(x \cos \alpha_{d j}+y \sin \alpha_{d j}\right)-\omega_{di}t+\beta_{ij} $$
-其中$\zeta_{ij},k_{i},\alpha_{dj},\omega_{di},\beta_{ij}$分别为波浪的波幅、波数、方向角、频率和相位角。且$k_{i} = \omega_{di}^{2}/g$。
-可以看出，其中$x,y,t$是需要输入的参数，即坐标位置和时间，$z$就是波面高度，由于波的形成需要如上的这些参数。其中方向角和频率是需要进行划分的，其余的参数全都可以由不同的方向角和频率计算得到，下面讲波浪参数的确定。</p>
+其中$\zeta_{ij},k_{i},\alpha_{dj},\omega_{di},\beta_{ij}$分别为波浪的波幅、波数、方向角、频率和相位角。且$k_{i} = \omega_{di}^{2}/g$。</p>
+<p>可以看出，其中$x,y,t$是需要输入的参数，即坐标位置和时间，$z$就是波面高度，由于波的形成需要如上的这些参数。其中方向角和频率是需要进行划分的，其余的参数全都可以由不同的方向角和频率计算得到，下面讲波浪参数的确定。</p>
 <h3 id="方向角划分和选取">方向角划分和选取</h3>
 <p>对传播方向角$\alpha$进行划分时，设方向角的变化范围为主波向$\alpha_{main}$两侧$[-\pi/2,\pi/2]$的范围，将此区域$N$等分，每一份的宽度为$d\alpha=\pi/N$（论文这里写的有误，请大家注意），选取每段的中心值作为方向角$\alpha_{dj}$。</p>
 <h3 id="频率的划分和选取">频率的划分和选取</h3>
-<p>论文中给定了频率选取区间的计算方式，这里不做描述，直接关注频率的划分公式
-$$\omega_{i}=\left[\frac{3.11}{H_{1 / 3}^{2} \ln (M+2 / i)}\right]^{1 / 4}$$
-$$\omega_{di}=\frac{\omega_{i+1}+\omega_{i}}{2}$$
-这里采用等分能量法分割频率，将频率划分为$M$个等能量的区间，$\omega_{i}$是各区间的分界频率，$\omega_{di}$是各频率区间的中心值作为选取的频率。**（备注：原文中第一个公式中是$M/i$，因为i的取值只能是从1~M-1，所以只能产生M-2个区间，这里坐了一下修改，保证M的个数与选取的频率个数相同**</p>
+<p>论文中给定了频率选取区间的计算方式，这里不做描述，直接关注频率的划分公式</p>
+<p>$$\omega_{i}=\left[\frac{3.11}{H_{1 / 3}^{2} \ln (M+2 / i)}\right]^{1 / 4}$$</p>
+<p>$$\omega_{di}=\frac{\omega_{i+1}+\omega_{i}}{2}$$</p>
+<p>这里采用等分能量法分割频率，将频率划分为$M$个等能量的区间，$\omega_{i}$是各区间的分界频率，$\omega_{di}$是各频率区间的中心值作为选取的频率。</p>
+<p><strong>备注：原文中第一个公式中是$M/i$，因为i的取值只能是从1~M-1，所以只能产生M-2个区间，这里坐了一下修改，保证M的个数与选取的频率个数相同</strong></p>
 <h3 id="利用三维随机波浪谱确定波幅zeta_ij">利用三维随机波浪谱确定波幅$\zeta_{ij}$</h3>
-<p>标准波浪谱为PM谱
-$$S_{PM}(\omega)=\frac{0.78}{\omega^{5}}exp[-\frac{3.11}{\omega^{4}H_{1/3}^{2}}]$$
-其中$H_{1/3}=0.0214v^{2}$为有义波高，$v$是海面风速，会影响波浪高度。由于PM 谱描述的是能量随频率的变化，而对于三维随机波浪，其能量分布与频率和方向角都有关，并且认为频率和方向角的影响相互独立，则引入只与方向角$\alpha$有关的方向扩展谱函数$D_{f}(\alpha)$
-$$D_{f}(\alpha)=\frac{2}{\pi} \cos ^{2} \alpha,\left(-\frac{\pi}{2} \leqslant \alpha \leqslant \frac{\pi}{2}\right)$$
-最终得到三位随机波浪的方向波谱：
-$$S_{3D}(\omega,\alpha)=S_{PM}(\omega)D_{f}(alpha)$$
-将划分好的频率和方向角代入下式，即可得到每个单元组成波的波幅$\zeta_{ij}$
-$$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
-**(备注：论文这里公式有误，我已经做了修改)**</p>
+<p>标准波浪谱为PM谱</p>
+<p>$$S_{PM}(\omega)=\frac{0.78}{\omega^{5}}exp[-\frac{3.11}{\omega^{4}H_{1/3}^{2}}]$$</p>
+<p>其中$H_{1/3}=0.0214v^{2}$为有义波高，$v$是海面风速，会影响波浪高度。由于PM 谱描述的是能量随频率的变化，而对于三维随机波浪，其能量分布与频率和方向角都有关，并且认为频率和方向角的影响相互独立，则引入只与方向角$\alpha$有关的方向扩展谱函数$D_{f}(\alpha)$</p>
+<p>$$D_{f}(\alpha)=\frac{2}{\pi} \cos ^{2} \alpha,\left(-\frac{\pi}{2} \leqslant \alpha \leqslant \frac{\pi}{2}\right)$$</p>
+<p>最终得到三位随机波浪的方向波谱：</p>
+<p>$$S_{3D}(\omega,\alpha)=S_{PM}(\omega)D_{f}(alpha)$$</p>
+<p>将划分好的频率和方向角代入下式，即可得到每个单元组成波的波幅$\zeta_{ij}$</p>
+<p>$$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$</p>
+<p><strong>备注：论文这里公式有误，我已经做了修改</strong></p>
 <h3 id="随机初始相位beta_ij的生成">随机初始相位$\beta_{ij}$的生成</h3>
 <p>文中写的是线性乘同余法，其实用简单的$0-2\pi$的均匀分布随机采样就可以。</p>
 <h2 id="基本实现的静态波浪生成代码">基本实现的静态波浪生成代码</h2>
@@ -280,8 +301,18 @@ $$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
 <span class="k">end</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="波浪的动态实现">波浪的动态实现</h2>
-<p><strong>（计算已改为完全向量化，为了提升实时的渲染速度）</strong></p>
+</div><p><figure><a class="lightgallery" href="/images/blogimgwave.svg" title="静态波浪" data-thumbnail="/images/blogimgwave.svg" data-sub-html="<h2>静态波浪</h2><p>静态波浪</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/blogimgwave.svg"
+            data-srcset="/images/blogimgwave.svg, /images/blogimgwave.svg 1.5x, /images/blogimgwave.svg 2x"
+            data-sizes="auto"
+            alt="/images/blogimgwave.svg" />
+    </a><figcaption class="image-caption">静态波浪</figcaption>
+    </figure></p>
+<h2 id="波浪的动态实现">波浪的动态实现</h2>
+<p><strong>（计算已改为矩阵并行化，为了提升实时的渲染速度）</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -446,11 +477,21 @@ $$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
 <span class="k">end</span>
 </code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><p><figure><a class="lightgallery" href="/images/blogimgwave.gif" title="动态波浪" data-thumbnail="/images/blogimgwave.gif" data-sub-html="<h2>动态波浪</h2><p>动态波浪</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/blogimgwave.gif"
+            data-srcset="/images/blogimgwave.gif, /images/blogimgwave.gif 1.5x, /images/blogimgwave.gif 2x"
+            data-sizes="auto"
+            alt="/images/blogimgwave.gif" />
+    </a><figcaption class="image-caption">动态波浪</figcaption>
+    </figure></p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-11-02</span>
+                <span>更新于 2020-02-17</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -459,13 +500,13 @@ $$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
                             <a class="link-to-markdown" href="/first_post/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-via="xxxx"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://miraclefish.github.io/first_post/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-hashtags="船舶与海洋工程,数值模拟"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://miraclefish.github.io/first_post/" data-hashtag="船舶与海洋工程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-image="/images/blogimgwave.svg"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%88%B9%E8%88%B6%E4%B8%8E%E6%B5%B7%E6%B4%8B%E5%B7%A5%E7%A8%8B/">船舶与海洋工程</a>,&nbsp;<a href="/tags/%E6%95%B0%E5%80%BC%E6%A8%A1%E6%8B%9F/">数值模拟</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
@@ -473,10 +514,12 @@ $$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
 
     <div class="post-nav"></div>
 </div>
-<div id="comments"></div></article></div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Fish</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
@@ -485,5 +528,5 @@ $$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"valine":{"appId":"dL4pdIhFQiLqCs9r11w7EFJT-gzGzoHsz","appKey":"CPmSD6DMmQOfPeGawhujszYE","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"我有一个问题...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Fish's Blog","id-2":"Fish's Blog"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

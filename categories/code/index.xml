@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Code - 分类 - 我的全新 Hugo 网站</title>
+        <link>https://miraclefish.github.io/categories/code/</link>
+        <description>Code - 分类 - 我的全新 Hugo 网站</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>yuyifei@sjtu.edu.cn (Fish)</managingEditor>
+            <webMaster>yuyifei@sjtu.edu.cn (Fish)</webMaster><lastBuildDate>Mon, 17 Feb 2020 17:56:12 &#43;0800</lastBuildDate><atom:link href="https://miraclefish.github.io/categories/code/" rel="self" type="application/rss+xml" /><item>
+    <title>Matlab波浪数值模拟</title>
+    <link>https://miraclefish.github.io/first_post/</link>
+    <pubDate>Mon, 17 Feb 2020 17:56:12 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://miraclefish.github.io/first_post/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/blogimgwave.svg" referrerpolicy="no-referrer">
+            </div>根据两篇论文实现的波浪数值模拟，实现了相当真实的静态波浪和动态波浪，Matlab代码可直接调试。]]></description>
+</item></channel>
+</rss>
