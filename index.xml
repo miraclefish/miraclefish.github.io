@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>我的全新 Hugo 网站</title>
+        <link>https://miraclefish.github.io/</link>
+        <description>这是我的全新 Hugo 网站</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Nov 2021 17:56:12 &#43;0800</lastBuildDate>
+            <atom:link href="https://miraclefish.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>Matlab波浪数值模拟</title>
+    <link>https://miraclefish.github.io/first_post/</link>
+    <pubDate>Tue, 02 Nov 2021 17:56:12 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://miraclefish.github.io/first_post/</guid>
+    <description><![CDATA[写在前面：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程]]></description>
+</item></channel>
+</rss>

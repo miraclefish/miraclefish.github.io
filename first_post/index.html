@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Matlab波浪数值模拟 - 我的全新 Hugo 网站</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Matlab波浪数值模拟" />
+<meta property="og:description" content="写在前面：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://miraclefish.github.io/first_post/" /><meta property="og:image" content="https://miraclefish.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-02T17:56:12+08:00" />
+<meta property="article:modified_time" content="2021-11-02T17:56:12+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://miraclefish.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Matlab波浪数值模拟"/>
+<meta name="twitter:description" content="写在前面：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://miraclefish.github.io/first_post/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Matlab波浪数值模拟",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/miraclefish.github.io\/first_post\/"
+        },"genre": "posts","wordcount":  1809 ,
+        "url": "https:\/\/miraclefish.github.io\/first_post\/","datePublished": "2021-11-02T17:56:12+08:00","dateModified": "2021-11-02T17:56:12+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "xxxx"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="我的全新 Hugo 网站"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="我的全新 Hugo 网站"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Matlab波浪数值模拟</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>xxxx</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-02">2021-11-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1809 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#理论依据">理论依据</a>
+      <ul>
+        <li><a href="#方向角划分和选取">方向角划分和选取</a></li>
+        <li><a href="#频率的划分和选取">频率的划分和选取</a></li>
+        <li><a href="#利用三维随机波浪谱确定波幅zeta_ij">利用三维随机波浪谱确定波幅$\zeta_{ij}$</a></li>
+        <li><a href="#随机初始相位beta_ij的生成">随机初始相位$\beta_{ij}$的生成</a></li>
+      </ul>
+    </li>
+    <li><a href="#基本实现的静态波浪生成代码">基本实现的静态波浪生成代码</a></li>
+    <li><a href="#波浪的动态实现">波浪的动态实现</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><strong>写在前面</strong>：最近几天新冠病毒疫情还未平息，在家帮女票研究波浪模型的时候探索了一下用Matlab进行波浪数值模拟的简单方法，在这里写一个简单教程，因为我在网上也没有找到写的比较完整的波浪模拟代码，所以来这里占个坑，希望对大家有所帮助。
+[TOC]</p>
+<h2 id="理论依据">理论依据</h2>
+<p>详情参考这两篇论文：</p>
+<blockquote>
+<p>[1]刘素美. 波浪数值模拟[J]. 科技与创新, 2018(13):132-133.
+[2]赵珂,李茂华,郑建丽,田冠楠. 基于波浪谱的三维随机波浪数值模拟及仿真[J]. 舰船科学技术, 2014,36(02):37-39.</p>
+</blockquote>
+<p>简单来说就是，波浪的模拟，可以由不同方向角、不同频率的很多个波，用随机的初始相位初始化后叠加得到。显然，组成波浪的波的频率个数越多、方向角个数越多，能够形成的波就更复杂（直观上也更真实）。
+<strong>先给出波面模型的公式</strong>（根据文献[1]）
+$$ z = \eta(x, y, t)=\sum_{i=1}^{M} \sum_{j=1}^{N} \zeta_{i j} \cos [{k}_{i}\left(x \cos \alpha_{d j}+y \sin \alpha_{d j}\right)-\omega_{di}t+\beta_{ij} $$
+其中$\zeta_{ij},k_{i},\alpha_{dj},\omega_{di},\beta_{ij}$分别为波浪的波幅、波数、方向角、频率和相位角。且$k_{i} = \omega_{di}^{2}/g$。
+可以看出，其中$x,y,t$是需要输入的参数，即坐标位置和时间，$z$就是波面高度，由于波的形成需要如上的这些参数。其中方向角和频率是需要进行划分的，其余的参数全都可以由不同的方向角和频率计算得到，下面讲波浪参数的确定。</p>
+<h3 id="方向角划分和选取">方向角划分和选取</h3>
+<p>对传播方向角$\alpha$进行划分时，设方向角的变化范围为主波向$\alpha_{main}$两侧$[-\pi/2,\pi/2]$的范围，将此区域$N$等分，每一份的宽度为$d\alpha=\pi/N$（论文这里写的有误，请大家注意），选取每段的中心值作为方向角$\alpha_{dj}$。</p>
+<h3 id="频率的划分和选取">频率的划分和选取</h3>
+<p>论文中给定了频率选取区间的计算方式，这里不做描述，直接关注频率的划分公式
+$$\omega_{i}=\left[\frac{3.11}{H_{1 / 3}^{2} \ln (M+2 / i)}\right]^{1 / 4}$$
+$$\omega_{di}=\frac{\omega_{i+1}+\omega_{i}}{2}$$
+这里采用等分能量法分割频率，将频率划分为$M$个等能量的区间，$\omega_{i}$是各区间的分界频率，$\omega_{di}$是各频率区间的中心值作为选取的频率。**（备注：原文中第一个公式中是$M/i$，因为i的取值只能是从1~M-1，所以只能产生M-2个区间，这里坐了一下修改，保证M的个数与选取的频率个数相同**</p>
+<h3 id="利用三维随机波浪谱确定波幅zeta_ij">利用三维随机波浪谱确定波幅$\zeta_{ij}$</h3>
+<p>标准波浪谱为PM谱
+$$S_{PM}(\omega)=\frac{0.78}{\omega^{5}}exp[-\frac{3.11}{\omega^{4}H_{1/3}^{2}}]$$
+其中$H_{1/3}=0.0214v^{2}$为有义波高，$v$是海面风速，会影响波浪高度。由于PM 谱描述的是能量随频率的变化，而对于三维随机波浪，其能量分布与频率和方向角都有关，并且认为频率和方向角的影响相互独立，则引入只与方向角$\alpha$有关的方向扩展谱函数$D_{f}(\alpha)$
+$$D_{f}(\alpha)=\frac{2}{\pi} \cos ^{2} \alpha,\left(-\frac{\pi}{2} \leqslant \alpha \leqslant \frac{\pi}{2}\right)$$
+最终得到三位随机波浪的方向波谱：
+$$S_{3D}(\omega,\alpha)=S_{PM}(\omega)D_{f}(alpha)$$
+将划分好的频率和方向角代入下式，即可得到每个单元组成波的波幅$\zeta_{ij}$
+$$\zeta_{ij}=\sqrt{2S(\omega,\alpha)d{\omega}d{\alpha}}$$
+**(备注：论文这里公式有误，我已经做了修改)**</p>
+<h3 id="随机初始相位beta_ij的生成">随机初始相位$\beta_{ij}$的生成</h3>
+<p>文中写的是线性乘同余法，其实用简单的$0-2\pi$的均匀分布随机采样就可以。</p>
+<h2 id="基本实现的静态波浪生成代码">基本实现的静态波浪生成代码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-matlab" data-lang="matlab"><span class="n">n</span> <span class="p">=</span> <span class="mi">64</span><span class="p">;</span>
+<span class="n">map</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<span class="n">M</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>    <span class="c">% ferequence number</span>
+<span class="n">N</span> <span class="p">=</span> <span class="mi">50</span><span class="p">;</span>   
+<span class="nb">beta</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="nb">rand</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>  
+
+<span class="k">for</span> <span class="n">x</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">y</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span>
+        <span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="p">=</span> <span class="n">bo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="nb">beta</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">XX</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">;</span>
+<span class="n">YY</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">;</span>
+<span class="n">surf</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="n">map</span><span class="p">);</span>
+<span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="k">function</span><span class="w"> </span>H <span class="p">=</span><span class="w"> </span><span class="nf">bo</span><span class="p">(</span>x,y,M,N,beta<span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>     
+<span class="n">v</span> <span class="p">=</span> <span class="mi">5</span><span class="p">;</span>    
+<span class="n">g</span> <span class="p">=</span> <span class="mf">9.8</span><span class="p">;</span>  
+<span class="n">H_value</span> <span class="p">=</span> <span class="mf">0.0214</span><span class="o">*</span><span class="n">v</span>^<span class="mi">2</span><span class="p">;</span>  
+<span class="n">alpha_main</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>        
+
+<span class="n">da</span> <span class="p">=</span> <span class="nb">pi</span><span class="o">/</span><span class="n">N</span><span class="p">;</span> 
+<span class="n">a</span> <span class="p">=</span> <span class="n">alpha_main</span><span class="o">-</span><span class="nb">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">da</span><span class="o">/</span><span class="mi">2</span> <span class="p">:</span> <span class="n">da</span> <span class="p">:</span> <span class="n">alpha_main</span><span class="o">+</span><span class="nb">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="n">da</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> 
+
+<span class="n">wi</span> <span class="p">=</span> <span class="p">(</span><span class="mf">3.11</span><span class="o">./</span><span class="p">(</span><span class="n">H_value</span>^<span class="mi">2</span><span class="o">*</span><span class="nb">log</span><span class="p">((</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">./</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">))))</span><span class="o">.^</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">);</span>
+<span class="c">% wi = zeros(M+1,1);</span>
+<span class="c">% for i = 1:M+1</span>
+<span class="c">%     wi(i) = (3.11/(H_value^2*log((M+2)/i)))^(1/4);</span>
+<span class="c">% end </span>
+
+<span class="n">w</span> <span class="p">=</span> <span class="p">(</span><span class="n">wi</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">wi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">dw</span> <span class="p">=</span> <span class="n">wi</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">-</span><span class="n">wi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c">% w = zeros(M,1);</span>
+<span class="c">% dw = zeros(M,1);</span>
+<span class="c">% for i = 1:M</span>
+<span class="c">%     w(i) = (wi(i+1)+wi(i))/2;</span>
+<span class="c">%     dw(i) = wi(i+1)-wi(i);</span>
+<span class="c">% end</span>
+
+ <span class="n">H</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="nb">i</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
+    <span class="k">for</span> <span class="nb">j</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+        <span class="n">adj</span> <span class="p">=</span> <span class="n">a</span><span class="p">(</span><span class="nb">j</span><span class="p">);</span>
+        <span class="n">wdi</span> <span class="p">=</span> <span class="n">w</span><span class="p">(</span><span class="nb">i</span><span class="p">);</span>
+        <span class="n">Spm_w</span> <span class="p">=</span> <span class="mf">0.78</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">3.11</span><span class="o">/</span><span class="p">(</span><span class="n">wdi</span>^<span class="mi">4</span><span class="o">*</span><span class="n">H_value</span>^<span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="n">wdi</span>^<span class="mi">5</span><span class="p">;</span>
+        <span class="n">Df_alpha</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>^<span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">pi</span><span class="p">;</span>
+        <span class="n">S3d</span> <span class="p">=</span> <span class="n">Spm_w</span><span class="o">*</span><span class="n">Df_alpha</span><span class="p">;</span>
+        <span class="n">A</span> <span class="p">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">S3d</span><span class="o">*</span><span class="n">dw</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">*</span><span class="n">da</span><span class="p">);</span>
+        <span class="n">ki</span> <span class="p">=</span> <span class="n">wdi</span>^<span class="mi">2</span><span class="o">/</span><span class="n">g</span><span class="p">;</span>
+        <span class="n">H</span> <span class="p">=</span> <span class="n">H</span> <span class="o">+</span> <span class="n">A</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">ki</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">adj</span><span class="p">))</span><span class="o">-</span><span class="n">wdi</span><span class="o">*</span><span class="n">t</span><span class="o">+</span><span class="nb">beta</span><span class="p">(</span><span class="nb">i</span><span class="p">,</span><span class="nb">j</span><span class="p">));</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="k">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="波浪的动态实现">波浪的动态实现</h2>
+<p><strong>（计算已改为完全向量化，为了提升实时的渲染速度）</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-matlab" data-lang="matlab"><span class="n">n</span> <span class="p">=</span> <span class="mi">100</span><span class="p">;</span>  
+<span class="n">t</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>  
+<span class="n">v</span> <span class="p">=</span> <span class="mi">8</span><span class="p">;</span>  
+<span class="n">M</span> <span class="p">=</span> <span class="mi">15</span><span class="p">;</span> 
+<span class="n">N</span> <span class="p">=</span> <span class="mi">15</span><span class="p">;</span> 
+
+<span class="n">g</span> <span class="p">=</span> <span class="mf">9.8</span><span class="p">;</span> 
+<span class="n">H_value</span> <span class="p">=</span> <span class="mf">0.0214</span><span class="o">*</span><span class="n">v</span>^<span class="mi">2</span><span class="p">;</span> 
+<span class="n">alpha_main</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>  
+
+<span class="nb">beta</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="nb">rand</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>  
+
+<span class="n">da</span> <span class="p">=</span> <span class="nb">pi</span><span class="o">/</span><span class="n">N</span><span class="p">;</span> 
+<span class="n">a</span> <span class="p">=</span> <span class="n">alpha_main</span><span class="o">-</span><span class="nb">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">da</span><span class="o">/</span><span class="mi">2</span> <span class="p">:</span> <span class="n">da</span> <span class="p">:</span> <span class="n">alpha_main</span><span class="o">+</span><span class="nb">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="n">da</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> 
+
+<span class="n">wi</span> <span class="p">=</span> <span class="p">(</span><span class="mf">3.11</span><span class="o">./</span><span class="p">(</span><span class="n">H_value</span>^<span class="mi">2</span><span class="o">*</span><span class="nb">log</span><span class="p">((</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">./</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">))))</span><span class="o">.^</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="c">% wi = zeros(M+1,1);</span>
+<span class="c">% for i = 1:M+1</span>
+<span class="c">%     wi(i) = (3.11/(H_value^2*log((M+2)/i)))^(1/4);</span>
+<span class="c">% end </span>
+
+<span class="n">w</span> <span class="p">=</span> <span class="p">(</span><span class="n">wi</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">wi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">dw</span> <span class="p">=</span> <span class="n">wi</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">-</span><span class="n">wi</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c">% w = zeros(M,1);</span>
+<span class="c">% dw = zeros(M,1);</span>
+<span class="c">% for i = 1:M</span>
+<span class="c">%     w(i) = (wi(i+1)+wi(i))/2;</span>
+<span class="c">%     dw(i) = wi(i+1)-wi(i);</span>
+<span class="c">% end</span>
+
+<span class="n">Spm_w</span> <span class="p">=</span> <span class="mf">0.78</span><span class="o">*</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">3.11</span><span class="o">./</span><span class="p">(</span><span class="n">w</span><span class="o">.^</span><span class="mi">4</span><span class="o">*</span><span class="n">H_value</span>^<span class="mi">2</span><span class="p">))</span><span class="o">./</span><span class="n">w</span><span class="o">.^</span><span class="mi">5</span><span class="p">;</span>
+<span class="n">Df_alpha</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">pi</span><span class="p">;</span>
+<span class="n">S3d</span> <span class="p">=</span> <span class="n">Spm_w</span><span class="o">&#39;*</span><span class="n">Df_alpha</span><span class="p">;</span>
+<span class="n">A</span> <span class="p">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">S3d</span><span class="o">.*</span><span class="p">(</span><span class="n">dw</span><span class="o">&#39;*</span><span class="n">da</span><span class="p">));</span>
+<span class="n">ki</span> <span class="p">=</span> <span class="n">w</span><span class="o">.^</span><span class="mi">2</span><span class="o">/</span><span class="n">g</span><span class="p">;</span>
+
+<span class="n">A</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">A</span><span class="p">(:)</span><span class="o">&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">aj</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">a</span> <span class="p">=</span> <span class="n">aj</span><span class="p">(:)</span><span class="o">&#39;</span>；
+<span class="n">ki</span> <span class="p">=</span> <span class="n">ki</span><span class="o">&#39;</span><span class="p">;</span>
+<span class="n">ki</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">ki</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+<span class="n">k</span> <span class="p">=</span> <span class="n">ki</span><span class="p">(:)</span><span class="o">&#39;</span><span class="p">;</span> 
+<span class="n">extend_w</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">w</span><span class="o">&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="n">extend_w</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">extend_w</span><span class="p">(:)</span><span class="o">&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nb">beta</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="nb">beta</span><span class="p">(:)</span><span class="o">&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+
+<span class="n">XX</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">;</span> <span class="n">YY</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">;</span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span> <span class="p">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">);</span>
+<span class="n">t0</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">dt</span> <span class="p">=</span> <span class="mf">0.1</span>；
+<span class="n">T</span> <span class="p">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="n">X</span> <span class="p">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">Y</span> <span class="p">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="n">clf</span>
+<span class="n">shg</span>
+<span class="n">set</span><span class="p">(</span><span class="n">gcf</span><span class="p">);</span>
+<span class="n">MAP</span> <span class="p">=</span> <span class="n">wave2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">extend_w</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="nb">beta</span><span class="p">);</span>
+<span class="n">MAP</span> <span class="p">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">MAP</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="n">surfplot</span> <span class="p">=</span> <span class="n">surf</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="n">MAP</span><span class="p">);</span>
+<span class="c">%shading interp</span>
+<span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span><span class="n">dt</span><span class="p">:</span><span class="n">T</span>
+    <span class="n">MAP</span> <span class="p">=</span> <span class="n">wave2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">extend_w</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="nb">beta</span><span class="p">);</span>
+    <span class="n">MAP</span> <span class="p">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">MAP</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="n">set</span><span class="p">(</span><span class="n">surfplot</span><span class="p">,</span><span class="s">&#39;zdata&#39;</span><span class="p">,</span><span class="n">MAP</span><span class="p">);</span>
+<span class="c">%     shading interp</span>
+    <span class="n">drawnow</span>
+<span class="k">end</span>
+
+
+<span class="k">function</span><span class="w"> </span>wave <span class="p">=</span><span class="w"> </span><span class="nf">wave2</span><span class="p">(</span>X,Y,A,k,a,extend_w,t,beta<span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="n">wave</span> <span class="p">=</span> <span class="n">sum</span><span class="p">(</span><span class="nb">cos</span><span class="p">((</span><span class="n">X</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">+</span><span class="n">Y</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">a</span><span class="p">))</span><span class="o">.*</span><span class="n">k</span><span class="o">-</span><span class="n">extend_w</span><span class="o">.*</span><span class="n">t</span><span class="o">+</span><span class="nb">beta</span><span class="p">)</span><span class="o">.*</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-11-02</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/first_post/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-via="xxxx"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://miraclefish.github.io/first_post/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://miraclefish.github.io/first_post/" data-title="Matlab波浪数值模拟"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
