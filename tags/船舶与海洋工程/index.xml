@@ -6,12 +6,12 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>yuyifei@sjtu.edu.cn (Fish)</managingEditor>
             <webMaster>yuyifei@sjtu.edu.cn (Fish)</webMaster><lastBuildDate>Mon, 17 Feb 2020 17:56:12 &#43;0800</lastBuildDate><atom:link href="https://miraclefish.github.io/tags/%E8%88%B9%E8%88%B6%E4%B8%8E%E6%B5%B7%E6%B4%8B%E5%B7%A5%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
     <title>Matlab波浪数值模拟</title>
-    <link>https://miraclefish.github.io/first_post/</link>
+    <link>https://miraclefish.github.io/matlabwavesimulation/</link>
     <pubDate>Mon, 17 Feb 2020 17:56:12 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://miraclefish.github.io/first_post/</guid>
+    <guid>https://miraclefish.github.io/matlabwavesimulation/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/blogimgwave.svg" referrerpolicy="no-referrer">
+                <img src="/images/blogimgwave.png" referrerpolicy="no-referrer">
             </div>根据两篇论文实现的波浪数值模拟，实现了相当真实的静态波浪和动态波浪，Matlab代码可直接调试。]]></description>
 </item></channel>
 </rss>
