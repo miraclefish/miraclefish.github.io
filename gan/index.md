@@ -11,11 +11,11 @@ $$\min_{G} \max_{D} V(D, G)=\mathbb{E}_{\boldsymbol{x} \sim p_{\text { data }}(\
 
 See Figure 1 for a less formal, more pedagogical explanation of the approach.
 
-![Explanation](/images/GAN_explanation.png "Explanation")
+![Explanation](https://gitee.com/miraclefish/picgo/raw/master/notebookPic/GAN_explanation.png "Explanation")
 
 ## 2. Theoretical Results
 
-![Training approach](/images/GAN_algorithm.png "Training approach")
+![Training approach](https://gitee.com/miraclefish/picgo/raw/master/notebookPic/GAN_algorithm.png "Training approach")
 
 ### 2.1 Global Optimality of $p_{g}=p_{\text { data }}$
 
@@ -51,7 +51,7 @@ $$\begin{aligned} C(G) & = \max_{D} V(G, D) \\\\  & \mathbb{E}_{\boldsymbol{x} \
 
 ## 3. Conclusion
 
-![Challenges in generative modeling](/images/GAN_conclusion.png "Challenges in generative modeling")
+![Challenges in generative modeling](https://gitee.com/miraclefish/picgo/raw/master/notebookPic/GAN_conclusion.png "Challenges in generative modeling")
 
 ---
 **Advantages and disadvantages**

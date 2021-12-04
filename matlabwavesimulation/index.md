@@ -121,7 +121,7 @@ for i=1:M
 end
 end
 ```
-![静态波浪](/images/blogimgwave.svg "静态波浪")
+![静态波浪](https://gitee.com/miraclefish/picgo/raw/master/notebookPic/blogimgwave.svg "静态波浪")
 
 ## 波浪的动态实现
 **（计算已改为矩阵并行化，为了提升实时的渲染速度）**

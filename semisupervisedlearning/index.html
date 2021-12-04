@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Deep Semi-supervised Learning [A Survey] - MiracleFish</title><meta name="Description" content="我们都是穷尽自己仅有的一点天赋，来表达内心深处的感受"><meta property="og:title" content="Deep Semi-supervised Learning [A Survey]" />
+<meta property="og:description" content="摘要" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://miraclefish.github.io/semisupervisedlearning/" /><meta property="og:image" content="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-05T17:39:46+08:00" />
+<meta property="article:modified_time" content="2021-11-05T17:39:46+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"/>
+
+<meta name="twitter:title" content="Deep Semi-supervised Learning [A Survey]"/>
+<meta name="twitter:description" content="摘要"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://miraclefish.github.io/semisupervisedlearning/" /><link rel="prev" href="https://miraclefish.github.io/writing/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Deep Semi-supervised Learning [A Survey]",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/miraclefish.github.io\/semisupervisedlearning\/"
+        },"genre": "posts","wordcount":  6362 ,
+        "url": "https:\/\/miraclefish.github.io\/semisupervisedlearning\/","datePublished": "2021-11-05T17:39:46+08:00","dateModified": "2021-11-05T17:39:46+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Fish"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="MiracleFish"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"
+        data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"
+        title="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png" /><span class="header-title-pre">  </span><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="查找内容" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="MiracleFish"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"
+        data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png"
+        title="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/logo.png" /><span class="header-title-pre">  </span><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="查找内容" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Deep Semi-supervised Learning [A Survey]</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Fish</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/deep-learning/"><i class="far fa-folder fa-fw"></i>Deep Learning</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-05">2021-11-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6362 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 13 分钟&nbsp;<span id="/semisupervisedlearning/" class="leancloud_visitors" data-flag-title="Deep Semi-supervised Learning [A Survey]">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#reference">Reference</a></li>
+    <li><a href="#概述">概述</a>
+      <ul>
+        <li><a href="#ssl任务的分类">SSL任务的分类</a></li>
+        <li><a href="#dssl模型的分类">DSSL模型的分类</a></li>
+      </ul>
+    </li>
+    <li><a href="#背景介绍">背景介绍</a>
+      <ul>
+        <li><a href="#ssl的相关假设">SSL的相关假设</a></li>
+        <li><a href="#classical-methods">Classical methods</a></li>
+        <li><a href="#相关学习范式">相关学习范式</a></li>
+        <li><a href="#数据集和应用">数据集和应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#generative-methods">Generative Methods</a>
+      <ul>
+        <li><a href="#semi-supervised-gans">Semi-supervised GANs</a>
+          <ul>
+            <li><a href="#catgan">CatGAN</a></li>
+            <li><a href="#ccgan">CCGAN</a></li>
+            <li><a href="#improved-gan">Improved GAN</a></li>
+            <li><a href="#goodbadgan">GoodBadGAN</a></li>
+            <li><a href="#localized-gan">Localized GAN</a></li>
+            <li><a href="#ct-gan">CT-GAN</a></li>
+            <li><a href="#bigan">BiGAN</a></li>
+            <li><a href="#ali">ALI</a></li>
+            <li><a href="#augmented-bigan">Augmented BiGAN</a></li>
+            <li><a href="#triple-gan">Triple GAN</a></li>
+            <li><a href="#enhanced-tgan">Enhanced TGAN</a></li>
+            <li><a href="#margin-gan">Margin GAN</a></li>
+            <li><a href="#triangle-gan">Triangle GAN</a></li>
+            <li><a href="#structured-gan">Structured GAN</a></li>
+            <li><a href="#r3-cgan">$R^3$-CGAN</a></li>
+            <li><a href="#summary">Summary</a></li>
+          </ul>
+        </li>
+        <li><a href="#semi-supervised-vae">Semi-supervised VAE</a>
+          <ul>
+            <li><a href="#ssvaes">SSVAEs</a></li>
+            <li><a href="#adgm">ADGM</a></li>
+            <li><a href="#infinite-vae">Infinite VAE</a></li>
+            <li><a href="#disentangled-vae">Disentangled VAE</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="reference">Reference</h2>
+<blockquote>
+<ol>
+<li><a href="https://arxiv.org/pdf/2103.00550" target="_blank" rel="noopener noreffer">Yang X, Song Z, King I, et al. A Survey on Deep Semi-supervised Learning[J]. arXiv preprint arXiv:2103.00550, 2021.</a></li>
+</ol>
+</blockquote>
+<h2 id="概述">概述</h2>
+<p>本篇综述不涉及关于SSL综述<a href="https://ieeexplore.ieee.org/abstract/document/4787647" target="_blank" rel="noopener noreffer">代表作</a>的内容，而是主要针对基于DL的算法。</p>
+<h3 id="ssl任务的分类">SSL任务的分类</h3>
+<ul>
+<li>Semi-supervised classification</li>
+<li>Semi-supervised clustering</li>
+<li>Semi-supervised regression</li>
+</ul>
+<h3 id="dssl模型的分类">DSSL模型的分类</h3>
+<ul>
+<li>Generative methods</li>
+<li>Consistency regularization methods</li>
+<li>Graph-based methods</li>
+<li>Pseudo-labeling methods</li>
+<li>hybrid methods</li>
+</ul>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png" title="DSSL分类" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png" data-sub-html="<h2>DSSL分类</h2><p>DSSL分类</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/taxonomy.png" />
+    </a><figcaption class="image-caption">DSSL分类</figcaption>
+    </figure></p>
+<h2 id="背景介绍">背景介绍</h2>
+<p>数据集表示为 $X={X_L, X_U}$ ，其中 $X_L=\{x_i\}^L_{i=1}$ 是一个比较小的有标注的子集，标注为 $Y_L=(y_1, y_2,\dots,y_L)$ ，而 $X_U=\{x_i\}^U_{i=1}$ 是一个比较大的无标注的子集，通常假设 $L \ll U$ 。</p>
+<p>假设数据集总共包含 $K$ 个类别，则 $X_L$ 被标注为 $\{y_i\}^L_{i=1}\in(y^1,y^2,\dots,y^K)$ ，则SSL需要去求解如下的优化问题：
+$$
+\min _{\theta} \underbrace{\sum_{x \in X_{L}, y \in Y_{L}} \mathcal{L}_{s}(x, y, \theta)}_{\text {supervised loss }}+\alpha \underbrace{\sum_{x \in X_{U}} \mathcal{L}_{u}(x, \theta)}_{\text {unsupervised loss }}+\beta \underbrace{\sum_{x \in X} \mathcal{R}(x, \theta)}_{\text {regularization }}
+$$</p>
+<ul>
+<li>$\mathcal{L}_s$ 表示每个样本的监督损失</li>
+<li>$\mathcal{L}_u$ 表示每个样本的无监督损失</li>
+<li>$\mathcal{R}$ 表示每个样本的正则化项（一致性损失或者是设计出的<code>regularization term</code>）</li>
+</ul>
+<blockquote>
+<p>注意：$\mathcal{L}_u$ 和 $\mathcal{R}$ 通常没有严格区分，因为 $\mathcal{R}$ 一般也是与标注信息无关的</p>
+</blockquote>
+<p>根据测试集数据是否提供将SSL分为两种setting：</p>
+<ul>
+<li>Transductive learning (Graph-based methods)</li>
+<li>Inductive learning (else methods)</li>
+</ul>
+<h3 id="ssl的相关假设">SSL的相关假设</h3>
+<ol>
+<li><strong>Self-training assumption</strong>：Self-training model的预测通常是正确的，因为该假设成立的话，high-confidence predictions就可以被当作真实标签。这个假设通常在类分离的比较好的时候满足。</li>
+<li><strong>Co-training assumption</strong>：不同合理的假设导致不同的有标签数据和无标签数据的组合。Blum提出一种co-training model，模型满足“实例 $x$ 有两个条件独立的 <code>views</code> ，每个 <code>view</code> 满足一个分类任务”。</li>
+<li><strong>Generative model assumption</strong>：已知先验 $p(y)$ 和条件分布 $p(x|y)$ 的情况下，可以通过 $p(x,y)=p(y)p(x|y)$ 将无标签数据和类别有效连接起来。</li>
+<li><strong>Clustering assumption</strong>：同类样本在高维空间中通常成簇聚集，同类的两个样本之间用短线连接通常不会穿过低密度区域，因此大量的无标签数据可以用来调整分类边界。</li>
+<li><strong>Low-density separation</strong>：与Clustering assumption类似，决策边界不应穿过高密度区域。</li>
+<li><strong>Manifold assumption</strong>：如果 $x_1$ 和 $x_2$ 在低维流形上局部相邻，他们将拥有相同的类别。这反映的是决策边界的局部平滑性。</li>
+</ol>
+<h3 id="classical-methods">Classical methods</h3>
+<ol>
+<li>1970年，SSL概念首先被提出，实现思路是采用 self-learning 的方式，先拿有标签的数据训练模型，再拿无标签的数据测试，prediction 值较高的认为是该样本的 ground truth label (pseudo label)，把这部分再拿进模型训练，逐步迭代。</li>
+<li>生成模型依据假设 $p(x,y)=p(y)p(x|y)$ ，对于有标签数据， $p(y)$ 和 $p(x,y)$ 已知，需要求解 $p(x|y)$ 的参数，$p(x|y)$ 通常为可识别的分布（多项式分布、高斯分布）。通常用 EM 算法迭代求解。 但可识别的分布通常不能完全匹配真实分布，会导致分类性能下降。</li>
+<li>TSVMs (Transductive Support Vector Machines)：和SVMs同样，TSVMs优化数据点和决策边界之间的gap，然后借助无标签数据的信息expand the gap。</li>
+<li>Graph-based methods 依赖于有标签数据和无标签数据分布的几何结构（流形）。通过探索数据的图或流形结构，可以借助非常少的标签 propagate information 来学习。（如：Label propagation）</li>
+</ol>
+<h3 id="相关学习范式">相关学习范式</h3>
+<ul>
+<li>迁移学习：Transfer Learning</li>
+<li>弱监督学习：Weakly-supervised Learning</li>
+<li>Positive and unlabeled learning</li>
+<li>元学习：Meta Learning</li>
+<li>自监督学习：Self-supervised Learning</li>
+</ul>
+<h3 id="数据集和应用">数据集和应用</h3>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png" title="相关数据集和应用" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png" data-sub-html="<h2>相关数据集和应用</h2><p>相关数据集和应用</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/Datasets.png" />
+    </a><figcaption class="image-caption">相关数据集和应用</figcaption>
+    </figure></p>
+<h2 id="generative-methods">Generative Methods</h2>
+<h3 id="semi-supervised-gans">Semi-supervised GANs</h3>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png" title="GAN模型的演化关系" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png" data-sub-html="<h2>GAN模型的演化关系</h2><p>GAN模型的演化关系</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116153818.png" />
+    </a><figcaption class="image-caption">GAN模型的演化关系</figcaption>
+    </figure></p>
+<p>众所周知，GAN的损失函数表示如下：
+$$
+\min _{G} \max _{D} V(D, G) = \mathbb{E} _{x \sim p(x)} [\log D(x)] + \mathbb{E} _{z \sim p _{z}} [\log (1-D(G(z)))]
+$$
+<figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png" title="GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png" data-sub-html="<h2>GAN</h2><p>GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116154949.png" />
+    </a><figcaption class="image-caption">GAN</figcaption>
+    </figure></p>
+<p>因为GAN可以从无标签数据中学习数据的真实分布，所以它可以用于SSL任务，而具体的应用方式分为如下四种：</p>
+<ul>
+<li>重用（re-use） Discriminator 的特征</li>
+<li>使用 GAN 生成的样本去正则化（regularize）分类器</li>
+<li>学习一个 inference model</li>
+<li>使用 GAN 生成的样本作为另外的训练数据</li>
+</ul>
+<h4 id="catgan">CatGAN</h4>
+<p><strong>Categorical Generative Adversarial Network</strong></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png" title="CatGAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png" data-sub-html="<h2>CatGAN</h2><p>CatGAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116155042.png" />
+    </a><figcaption class="image-caption">CatGAN</figcaption>
+    </figure></p>
+<p>把 GAN 的 Discriminator 改成了分类器（而不是仅判断生成的样本是否真实）。个人理解主要目的有两个：</p>
+<ul>
+<li>可以实现无监督的聚类，因为生成的样本会被判别器主动分类，只不过类别个数需要手动设定；</li>
+<li>可以实现半监督学习，利用有标签数据同时训练模型，因为 Discriminator 可以输出分类。</li>
+</ul>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Loss components<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>$H[p(y \mid x, D)]$ ：对于无标签数据，最小化条件概率的熵，即 $D$ 需要对 $x$ 给出更明确地类别输出；</li>
+<li>$H[p(y \mid G(z), D)]$ ：对于生成的数据，最大化条件概率的熵，即 $D$ 需要对 $G(z)$ 给出近似均匀分布的输出（GAN的思想）；</li>
+<li>$H[p(y\mid D)]$ ：最大化类别分布先验的熵，是在各类样本个数基本相等的假设下，保证 $D$ 对样本的聚类没有偏见。这里是对数据集中所有样本去计算的，所以无法与前面的两个损失在一个 batch 里面兼容，文中对它的计算做了特殊处理。</li>
+<li>$C E[\mathbf{y}, p(y \mid \mathbf{x}, D)]$ ：有标签数据的交叉熵，用于半监督学习的设定。</li>
+</ul>
+<blockquote>
+<p>注意：这里提到的损失函数最大或者最小化要根据模型训练在 $G$ step 还是在 $D$ step 来确定，满足GAN的训练规则。</p>
+</blockquote>
+</div>
+        </div>
+    </div>
+<h4 id="ccgan">CCGAN</h4>
+<p><strong>Context-Conditional Generative Adversarial Network</strong></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png" title="CCGAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png" data-sub-html="<h2>CCGAN</h2><p>CCGAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211116172350.png" />
+    </a><figcaption class="image-caption">CCGAN</figcaption>
+    </figure></p>
+<p>主要亮点是利用图像周围的像素（context information）学习图像特征。图中的 $m$ 是一个二值的 mask，用于 drop out 图像中的 specific portion （比如一个方形区域）。$x_{I}=(1-m) \odot x_{G}+m \odot x$ 表示 in-painted image，就是根据输入的挖空图像生成的补全图像。其中 $x_{G}=G(m \odot x, z)$ 表示根据挖空图像和噪声生成的图像。其余部分与 GAN 相同，个人觉得类似 Transformer 中的掩码机制。</p>
+<h4 id="improved-gan">Improved GAN</h4>
+<p><strong>Improved Techniques for Training GANs</strong></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png" title="Improved GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png" data-sub-html="<h2>Improved GAN</h2><p>Improved GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png" />
+    </a><figcaption class="image-caption">Improved GAN</figcaption>
+    </figure></p>
+<p>与 CatGAN 相比，ImprovedGAN 在判别器 $D$ 的输出上多加了一类，即第 $K+1$ 类，表示 $G$ 生成的数据。直观理解就是，$D$ 本来是要判别样本是 real sample 还是 generated sample 的，但是 CatGAN 把它改成了分类器，即默认 generated sample 一定属于 $K$ 类。这显然是有问题的，如果生成的数据压根啥都不是呢，所以给 $D$ 多加一类，强制 $G$ 要生成与真实样本相似的前 $K$ 类的数据。此外，这篇文章还提出了很多训练 GAN 的技巧，这里做一下列举，详细的请参考<a href="https://arxiv.org/abs/1606.03498" target="_blank" rel="noopener noreffer">原文</a>。</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Techniques<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>Feature matching</li>
+<li>Minibatch discrimination</li>
+<li>Historical averaging (这个很像自监督学习里的MoCo方法)</li>
+<li>One-sided label smoothing</li>
+<li>Virtual batch normalization</li>
+</ul>
+</div>
+        </div>
+    </div>
+<h4 id="goodbadgan">GoodBadGAN</h4>
+<p><strong>Good semi-supervised learning that requires a bad GAN</strong></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png" title="GoodBadGAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png" data-sub-html="<h2>GoodBadGAN</h2><p>GoodBadGAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117103735.png" />
+    </a><figcaption class="image-caption">GoodBadGAN</figcaption>
+    </figure></p>
+<p>这篇文章意识到 Improved GAN 的 $G$ 和 $D$ 可能不能同时达到最优（即判别器达到了最优效果，但是生成器可能产生不真实的样本）。该方法从理论上证明了，为什么 bad samples 可以增强 SSL 的 performance。这里给出一个直观解释，理论的证明参考<a href="https://arxiv.org/pdf/1705.09783.pdf" target="_blank" rel="noopener noreffer">原文</a>。</p>
+<blockquote>
+<p>对于一个 Perfect Generator，训练的目标是期望它与真实数据的分布一致：$p_{G}=p$ 。但是如此一来会导致 $D$ 的最优解等价于有监督损失的最优解（原文中有理论证明），即无标签的数据失效了。而一个 Complete Generator，是应该能够产生 Bad samples 的，因为这样可以使 $G$ 生成的部分 Bad sample 填充高维空间中的低密度区域，使得 $D$ 的 boundary 不会落在类内的低密度区域，避免分界面穿过流形。</p>
+</blockquote>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Loss components<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>$\mathbb{E} _{x \sim p _G} \log p(x) \mathbb{I}[p(x)&gt;\epsilon]$ ：$G$ 的优化目标（最小化），用于生成 bad samples 的惩罚项，它只对高密度区域的样本起作用，低密度区域的样本不受影响（$\mathbb{I}[\cdot]$ 是示性函数）。这里是指对于 $p(x)&gt;\epsilon$ 的样本，约束使其 $p(x)$ 越小越好，直至 $p(x)&lt;\epsilon$ 后即可消除惩罚（该样本的惩罚等于0）</li>
+<li>$\mathbb{E} _{x \sim \mathcal{U}} \sum _{k=1}^{K} p _{D}(k \mid x) \log p _{D}(k \mid x)$ ：$D$ 的优化目标（最大化：这里是负的条件熵，相当于最小化条件熵），用于使无标签数据的输出尽可能地确定，避免 $D$ 对于无标签数据的分类结果过于均匀。</li>
+</ul>
+</div>
+        </div>
+    </div>
+<h4 id="localized-gan">Localized GAN</h4>
+<p><strong>Global versus Localized Generative Adversarial Nets</strong></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png" title="Localized GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png" data-sub-html="<h2>Localized GAN</h2><p>Localized GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211117173942.png" />
+    </a><figcaption class="image-caption">Localized GAN</figcaption>
+    </figure></p>
+<p>通常的 GAN 是指用生成器 $G$ 从随机噪声 $z\in\mathbb{R}^N$ 生成样本 $G(z)\in \mathbb{R}^D$ ，在这种情况下，生成样本 $G(z)$ 的环境空间（ambient space）是用 $N$ 维的全局坐标系 $z$ 来表示的。所有生成的样本会形成一个 $N$ 维的 manifold $\mathcal{M} = \{ G(\mathbf{z}) \mid \mathbf{z} \in \mathbb{R}^{N} \}$ 。这样的假设有两个缺陷：</p>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>问题<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>在全局坐标系的假设下，样本点 $x$ 的局部结构无法直接得到，因为流形空间是 $N$ 维的，$D$ 维的样本空间只是一个 Embedding，所以必须知道 $G^{-1}(\cdot)$ 才能从 $x$ 映射回 $z$ 从而知道 $x$ 的局部结构。</li>
+<li>如果 $x$ 的维数有缺陷（$\mathcal{T} _x &lt; N $），则切空间 $\mathcal{T} _{x}$ 会产生局部塌陷（local collapse）。如此一来，当 $z$ 在某些方向上发生改变时，$G(z)$ 就不会再产生有意义的数据点（即 $x$ 不再变化）。</li>
+</ul>
+</div>
+        </div>
+    </div>
+<p>所以，本文提出 local generator $G(x,z)$ 满足如下两个条件：</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Conditions<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li><em>locality</em> ：$G(x, 0)=x$ , i.e., 局部坐标 $z$ 的原点必须在 $x$</li>
+<li><em>orthonormality</em> ：$\mathbf{J} _{x} ^{T} \mathbf{J} _{x}=\mathbf{I} _{N}$ , i.e., $\mathcal{T}_x$ 的基必须是标准正交的，保证 $x$ 的局部不会产生塌陷。</li>
+</ul>
+</div>
+        </div>
+    </div>
+<p>通过最小化如下的正则项来约束这两个条件：
+$$
+\Omega_{G}(\mathbf{x})=\mu|G(\mathbf{x}, \mathbf{0})-\mathbf{x}|^{2}+\eta\left|\mathbf{J}_{\mathbf{x}}^{T} \mathbf{J}_{\mathbf{x}}-\mathbf{I}_{N}\right|^{2}
+$$
+本文通过解决流形上函数的求导问题（详情见<a href="https://arxiv.org/pdf/1711.06020.pdf" target="_blank" rel="noopener noreffer">论文</a>），在半监督学习任务上得到了一个局部一致的分类器。</p>
+<h4 id="ct-gan">CT-GAN</h4>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png" title="CT-GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png" data-sub-html="<h2>CT-GAN</h2><p>CT-GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123115129.png" />
+    </a><figcaption class="image-caption">CT-GAN</figcaption>
+    </figure></p>
+<p>结合 Consistency training 和 WGAN 用于半监督学习，依赖于 Lipschitz 连续性条件。一致性约束通过对样本添加两次扰动来实现：（1）输入位置加扰动；（2）hidden layer 加扰动。细节参考<a href="https://arxiv.org/pdf/1803.01541.pdf" target="_blank" rel="noopener noreffer">论文</a>。</p>
+<h4 id="bigan">BiGAN</h4>
+<p><strong>Bidirectional Generative Adversarial Networks</strong></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png" title="BiGAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png" data-sub-html="<h2>BiGAN</h2><p>BiGAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123120158.png" />
+    </a><figcaption class="image-caption">BiGAN</figcaption>
+    </figure></p>
+<p>双向GAN，顾名思义，即是两个方向的生成，从 $z$ 到 $x$ 是 $G(z)$ 表示 generator，从 $x$ 到 $z$ 是 $E(x)$ 表示 encoder。$D$ 对 $(G(z), z)$ 和 $(E(x), x)$ 同时进行判别，迫使 $G$ 和 $E$ 能够学习出一对可逆的映射。目标函数如下：
+$$
+\min _{G, E} \max _{D}  \mathbb{E} _{\mathbf{x} \sim p _{\mathbf{X}}}\left[\mathbb{E} _{\mathbf{z} \sim p _{E}(\cdot \mid \mathbf{x})}[\log D(\mathbf{x}, \mathbf{z})]\right]+\mathbb{E} _{\mathbf{z} \sim p _{\mathbf{Z}}}\left[\mathbb{E} _{\mathbf{x} \sim p _{G}(\cdot \mid \mathbf{z})}[\log (1-D(\mathbf{x}, \mathbf{z}))]\right]
+$$
+此文偏理论，对其进行了详细的<a href="https://arxiv.org/pdf/1605.09782v7.pdf" target="_blank" rel="noopener noreffer">证明</a>。</p>
+<h4 id="ali">ALI</h4>
+<p><strong><a href="https://arxiv.org/abs/1606.00704" target="_blank" rel="noopener noreffer">Adversarially Learned Inference</a></strong></p>
+<p>ALI和BiGAN的结构基本一样，只是把 Encode 表述成了 Inference。</p>
+<h4 id="augmented-bigan">Augmented BiGAN</h4>
+<p>相比 BiGAN，做出了两点改变：</p>
+<ul>
+<li>使用了 Feature matching loss：$| \mathbb{E} _{x \in X} D(E(x), x)- \mathbb{E} _{z \sim p(z)} D(z, G(z)) | _{2}^{2}$</li>
+<li>防止生成的样本（$G(E(x))$）类别发生改变，引入损失项：$\mathbb{E} _{x \sim p(x)}[\log (1-D(E(x), G_x(E(x))))]$</li>
+</ul>
+<h4 id="triple-gan">Triple GAN</h4>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png" title="Triple GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png" data-sub-html="<h2>Triple GAN</h2><p>Triple GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211123220823.png" />
+    </a><figcaption class="image-caption">Triple GAN</figcaption>
+    </figure></p>
+<p>将传统的GAN改成了一个 <a href="https://arxiv.org/pdf/1703.02291.pdf" target="_blank" rel="noopener noreffer">three-player game</a>：</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Three players<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>$G$ ：generator 用一个 conditional network 去生成对应真实标签的假样本；</li>
+<li>$C$ ：classifier 给样本生成伪标签；</li>
+<li>$D$ ：discriminator 区分一个 data-label 对是否来自真实的数据集。</li>
+</ul>
+</div>
+        </div>
+    </div>
+<p>损失函数：
+$$
+\begin{aligned} \min _{C, G} \max _{D} U(C, G, D)= &amp; E _{(x, y) \sim p(x, y)}[\log D(x, y)]+\alpha E _{(x, y) \sim p _{c}(x, y)}[\log (1-D(x, y))] \\ &amp; +(1-\alpha) E _{(x, y) \sim p _{g}(x, y)}[\log (1-D(G(y, z), y))] \end{aligned}
+$$</p>
+<ul>
+<li>第一项对应真实样本和真实标签，$D$ 需要判别其为真；</li>
+<li>第二项对应真实样本和其伪标签，$D$ 需要判别其为假，迫使 $C$ 能够给出真实的标签；</li>
+<li>第三项对应生成样本和生成标签，$D$ 需要判别其为假，迫使 $G$ 能够根据标签生成真实的样本。</li>
+</ul>
+<h4 id="enhanced-tgan">Enhanced TGAN</h4>
+<p><a href="https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_Enhancing_TripleGAN_for_Semi-Supervised_Conditional_Instance_Synthesis_and_Classification_CVPR_2019_paper.pdf" target="_blank" rel="noopener noreffer">Enhanced TGAN</a> 在 Triple GAN上做了修改：</p>
+<ul>
+<li>Generator 生成图像时根据类别分布生成（conditioned on class distribution），并且加上了逐类的平均特征匹配（class-wise mean feature matching）</li>
+<li>分类网络包括两个分类器协作学习，为 $G$ 的训练提供更多的类别信息</li>
+<li>Semantic matching term：增强语义一致性</li>
+</ul>
+<h4 id="margin-gan">Margin GAN</h4>
+<p><a href="https://openreview.net/pdf?id=HJl1gSBeUS" target="_blank" rel="noopener noreffer">Margin GAN</a> 是 Triple GAN 的另一个扩展模型：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png" title="Margin GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png" data-sub-html="<h2>Margin GAN</h2><p>Margin GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211124163824.png" />
+    </a><figcaption class="image-caption">Margin GAN</figcaption>
+    </figure></p>
+<p>与 Triple GAN 相似，有三个部分（$G$ , $D$ , $C$）的对抗训练，但是不同的是，它引入了另一种对抗训练方式：</p>
+<blockquote>
+<p>Generator 企图生成 large-margin 的假样本；Classifier 企图对这些假样本产生 small-margin 的分类结果。</p>
+</blockquote>
+<p>此外，Wrong pseudo label 通常会对基于伪标签的方法产生很坏的影响，而 Margin GAN 提升了模型对 wrong pseudo label 的容忍度，并且由于 $C$ 的约束， $G$ 生成的假样本更容易落在”正确“的决策边界附近，细化和缩小了真实样本周围的决策边界。如下图产生的问题，当 $G$ 能够在接近真实的决策边界处生成 fake samples 时，wrong pseudo label 就更不容易落在 real samples 中，和 GoodBadGAN 的思路类似，即一个坏的 $G$ 会对分类器的结果产生好的影响。</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png" title="Wrong pseudo labels problem" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png" data-sub-html="<h2>Wrong pseudo labels problem</h2><p>Wrong pseudo labels problem</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125151029.png" />
+    </a><figcaption class="image-caption">Wrong pseudo labels problem</figcaption>
+    </figure></p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>什么是 Margin ?<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>对于 Unlabeled 样本来说，其 Margin 表示为 $|f(x)|$ ，它表示分类器认为目前的预测是正确的并且让分类器更加确信当前的预测，它可以降低泛化误差的上界，带来更好的泛化性能。（这里没太懂，可以参考<a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.75.3613&amp;rep=rep1&amp;type=pdf" target="_blank" rel="noopener noreffer">论文</a>）</li>
+<li>对于有标签的样本来说，其 Margin 表示为 $\operatorname{Margin}(x, y)=C _{y}(x)-\max _{i \neq y} C _{i}(x)$ 即分类器对真实标签生成的概率减去对错误标签生成的概率的最大值。可以直观理解为分类器的分类性能，越准确，Margin 越大。</li>
+</ul>
+</div>
+        </div>
+    </div>
+<p><strong>Discriminator：</strong>
+$$
+\operatorname{Loss}(D) = -\{E _{x \sim p^{[l]}(x)}[\log (D(x))]+E _{\widetilde{x} \sim p^{[u]}(\widetilde{x})}[\log (D(\widetilde{x}))]+E _{z \sim p(z)}[\log (1-D(G(z)))]\}
+$$
+第一项是有标签数据，第二项是无标签数据，第三项是生成数据。</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Classifier<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ol>
+<li>有标签数据：$\operatorname{Loss}\left(C^{[l]}\right) =E_{(x, y) \sim p^{[l]}(x, y)}\left[-\sum_{i=1}^{k} y_{i} \log \left(C(x)_{i}\right)\right]$ 交叉熵损失，对应 large margin 的目标；</li>
+<li>无标签数据：$\operatorname{Loss}\left(C^{[u]}\right) =E_{\widetilde{x} \sim p^{[u]}(\widetilde{x})}\left[-\sum_{i=1}^{k} \widetilde{y}_{i}^{[u]} \log \left(C(\widetilde{x})_{i}\right)\right]$ 交叉熵损失，只不过这里的 label 是伪标签经过 One-hot 编码之后得到的，同样对应最大化 Margin；</li>
+<li>生成数据：$\operatorname{Loss}\left(C^{[g]}\right)=E_{z \sim p(z)}\left[\operatorname{Loss}_{I C E}\left(\widetilde{y}^{[g]}, C(G(z))\right)\right]$ 这里的 ICE 损失是逆交叉熵（Invert cross entropy），即 $\operatorname{Loss}_{I C E}\left(\widetilde{y}^{[g]}, C(G(z))\right) = -\sum_{i=1}^{k} \widetilde{y}_{i}^{[g]} \log \left(1-C(G(z))_{i}\right)$。 目的是为了减小 Margin，使得 $G$ 生成的数据更趋于均匀分布，即填充数据中的低密度区域，使得决策边界落在这些低密度区域。</li>
+<li>最终：$\operatorname{Loss}(C)=\operatorname{Loss}\left(C^{[l]}\right)+\operatorname{Loss}\left(C^{[u]}\right)+\operatorname{Loss}\left(C^{[g]}\right)$</li>
+</ol>
+</div>
+        </div>
+    </div>
+<p><strong>Generator：</strong>
+$$
+\operatorname{Loss}(G)=-E_{z \sim p(z)}[\log (D(G(z)))]+E_{z \sim p(z)}\left[\operatorname{Loss_{CE}}\left(\widetilde{y}^{[g]}, C(G(z))\right)\right]
+$$
+第一项是对于判别器；第二项是对于分类器，分类器针对 $G$ 生成的样本希望减小 Margin，则 $G$ 与之对抗需要增大 Margin，用交叉熵损失即可。</p>
+<h4 id="triangle-gan">Triangle GAN</h4>
+<p>Triangle GAN 可以看作是 BiGAN 或 ALI 的一种扩展：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png" title="Triangle GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png" data-sub-html="<h2>Triangle GAN</h2><p>Triangle GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125155752.png" />
+    </a><figcaption class="image-caption">Triangle GAN</figcaption>
+    </figure></p>
+<p>结构上多了一个 Discriminator，一个用于判别数据对是从 $(G(z),z)$ 中还是 $(x,E(x))$ 中生成，另一个用来判别样本标签对是从 $(x,y)$ 中还是 $(G(z), y)$ 中获得。</p>
+<h4 id="structured-gan">Structured GAN</h4>
+<p>Structured GAN 研究基于指定语义或结构的半监督条件生成问题：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png" title="Structured GAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png" data-sub-html="<h2>Structured GAN</h2><p>Structured GAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125160559.png" />
+    </a><figcaption class="image-caption">Structured GAN</figcaption>
+    </figure></p>
+<p>即相对于 Triangle GAN 加了一个 Conditioned Generator：</p>
+<ul>
+<li>Condition 1：$y$ 表示指定的语义</li>
+<li>Condition 2：$z$ 表示其他可变因素</li>
+</ul>
+<h4 id="r3-cgan">$R^3$-CGAN</h4>
+<p><a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Liu_Regularizing_Discriminative_Capability_of_CGANs_for_Semi-Supervised_Generative_Learning_CVPR_2020_paper.pdf" target="_blank" rel="noopener noreffer">$R^3$-CGAN</a> 提出了一种 CutMix （随机区域替换）策略，在两种类别的样本之间进行替换（跨类别的样本和真假样本），用于正则化 $C$ 和 $D_1$ ，结构与 Triangle GAN 相似。</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png" title="$R^3$-CGAN" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png" data-sub-html="<h2>$R^3$-CGAN</h2><p>$R^3$-CGAN</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211125161450.png" />
+    </a><figcaption class="image-caption">$R^3$-CGAN</figcaption>
+    </figure></p>
+<h4 id="summary">Summary</h4>
+<p>以上方法的主要区别体现在基本模块的数量和类型上，比如 Generator，Encoder，Discriminator 和 Classifier。</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>特点<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>CatGAN/CCGAN：在原始GAN的基础上引入类别信息</li>
+<li>Improved GAN/Localized GAN/CT-GAN：考虑 local information 和一致性约束</li>
+<li>BiGAN/ALI：添加 Encoder 模块</li>
+<li>Triple GAN：添加独立的 Classifier</li>
+</ul>
+</div>
+        </div>
+    </div>
+<h3 id="semi-supervised-vae">Semi-supervised VAE</h3>
+<p>变分自动编码器（Variational AutoEncoders）使用估计的后验分布 $q(z|x)$ 来代替真实的后验分布 $p(z|x)$ 。其置信下界ELBO（Evidence lower bound）写为：
+$$
+\log p(x) \geq \log \mathbb{E} _{q(z \mid x)}\left[\frac{p(z) p(x \mid z)}{q(z \mid x)}\right] = \mathbb{E} _{q(z \mid x)}[\log p(z) p(x \mid z)-\log q(z \mid x)]
+$$
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>为什么隐变量模型可以用于SSL？<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>这是一种引入未标记数据的自然方式</li>
+<li>通过隐变量的设置，可以轻松实现分离表征（表征解耦）的能力</li>
+<li>可以使用变分方法</li>
+</ul>
+</div>
+        </div>
+    </div></p>
+<h4 id="ssvaes">SSVAEs</h4>
+<p>一个具有隐编码表示的基于VAE的生成<a href="https://proceedings.neurips.cc/paper/2014/file/d523773c6b194f37b938d340d5d02232-Paper.pdf" target="_blank" rel="noopener noreffer">模型</a>。其中介绍了3个模型：</p>
+<p><strong>Latent-feature discriminative model (M1)</strong>：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png" title="M1" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png" data-sub-html="<h2>M1</h2><p>M1</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129215847.png" />
+    </a><figcaption class="image-caption">M1</figcaption>
+    </figure></p>
+<p>即最普通的 VAE 模型，用深度网络构建 $p_{\theta}(x|z)$ 和 $q_{\phi}(z|x)$ 使用隐变量 $z$ 表示图像特征，用于后续的分类。</p>
+<p><strong>Generative semi-supervised model (M2)</strong>：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png" title="M2" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png" data-sub-html="<h2>M2</h2><p>M2</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211129220406.png" />
+    </a><figcaption class="image-caption">M2</figcaption>
+    </figure></p>
+<p>相当于Conditional-VAE，将类别 $y$ 加入隐变量，$y$ 服从多项式分布 $p(y)=\mathop{Cat}(y|\boldsymbol{\pi})$ ，从而在生成样本时加入类别信息，生成器为 $p_{\theta}(x|y,z)$ 。对于无标签的数据，可以根据后验分布 $p_{\theta}(y|x)$ 对其标签进行推理。</p>
+<p><strong>Stacked generative semi-supervised model (M1+M2)</strong>：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png" title="M1&#43;M2" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png" data-sub-html="<h2>M1&#43;M2</h2><p>M1&#43;M2</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201151833.png" />
+    </a><figcaption class="image-caption">M1+M2</figcaption>
+    </figure></p>
+<p>使用 M1 中的 $z$ 作为 M2 中的生成目标 $x$ ，即用 M2 中的 $z_2$ 和 $y$ 生成 $x$ 的隐变量特征表示 $z_1$ ，再用其隐变量 $z_1$ 生成 $x$ 。
+$$
+p_{\theta}(x,y,z_1,z_2)=p_{\theta}(x|z_1)p_{\theta}(z_1|y,z_2)p(y)p(z_2)
+$$
+其中 $p_{\theta}(x|z_1)$ 和 $p_{\theta}(z_1|y,z_2)$ 用神经网络建模。</p>
+<p>对于有标签的样本，ELBO为：
+$$
+\log p_{\theta}(\mathbf{x}, y) \geq \mathbb{E}_{q_{\phi}(\mathbf{z} \mid \mathbf{x}, y)}\left[\log p_{\theta}(\mathbf{x} \mid y, \mathbf{z})+\log p_{\theta}(y)+\log p(\mathbf{z})-\log q_{\phi}(\mathbf{z} \mid \mathbf{x}, y)\right]=-\mathcal{L}(\mathbf{x}, y)
+$$
+对于无标签的样本，ELBO为：
+$$
+\begin{aligned} \log p_{\theta}(\mathbf{x}) &amp; \geq \mathbb{E}_{q_{\phi}(y, \mathbf{z} \mid \mathbf{x})}\left[\log p_{\theta}(\mathbf{x} \mid y, \mathbf{z})+\log p_{\theta}(y)+\log p(\mathbf{z})-\log q_{\phi}(y, \mathbf{z} \mid \mathbf{x})\right] \\ &amp;=\sum_{y} q_{\phi}(y \mid \mathbf{x})(-\mathcal{L}(\mathbf{x}, y))+\mathcal{H}\left(q_{\phi}(y \mid \mathbf{x})\right)=-\mathcal{U}(\mathbf{x}) \end{aligned}
+$$
+最终整个数据集的损失函数为：
+$$
+\mathcal{J}=\sum_{(\mathbf{x}, y) \sim \widetilde{p}_{l}} \mathcal{L}(\mathbf{x}, y)+\sum_{\mathbf{x} \sim \widetilde{p}_{u}} \mathcal{U}(\mathbf{x})
+$$</p>
+<h4 id="adgm">ADGM</h4>
+<p><a href="http://proceedings.mlr.press/v48/maaloe16.pdf" target="_blank" rel="noopener noreffer">Auxiliary Deep Generative Models</a> 是 SSVAEs 的一种扩展形式，加入了辅助变量 $a$：</p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png" title="Auxiliary deep generative model" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png" data-sub-html="<h2>Auxiliary deep generative model</h2><p>Auxiliary deep generative model</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201152955.png" />
+    </a><figcaption class="image-caption">Auxiliary deep generative model</figcaption>
+    </figure></p>
+<p>他解决的关键问题是：<strong>$q(z|x)$ 通常被定义为 diagonal Gaussian 的分布，这限制了模型的表达能力</strong>。</p>
+<p>加入辅助变量 $a$ 使得 $p(x,z)$ 变为 $p(x,z,a)=p(a|x,z)p(x,z)$ ，从而让变分分布 $q(z|x)=\int q(z|a,x)p(a|x)$ 变为一个一般的非高斯分布，以应对更复杂的后验分布 $p(z|x)$ ，提升模型的推断能力。</p>
+<p>添加了 auxiliary variable 的 lower bound 变为：
+$$
+\log p_{\theta} (x) \geq \mathbb{E}_{q_{\phi}(a, z \mid x)}\left[ \log \frac{p(x,z,a)}{q(z|x)} \right] = \mathbb{E}_{q_{\phi}(a, z \mid x)}\left[\log \frac{p_{\theta}(a \mid z, x) p_{\theta}(x \mid z) p(z)}{q_{\phi}(a \mid x) q_{\phi}(z \mid a, x)}\right] \equiv-\mathcal{U}_{\mathrm{AVAE}}(x)
+$$
+其中 $p_{\theta}(a|z,x)$ 和 $q_{\phi}(a|x)$ 用神经网络建模为 diagonal Gaussian 分布。</p>
+<h4 id="infinite-vae">Infinite VAE</h4>
+<p><a href="" rel="">Infinite VAE</a> 提出一种 VAE 的混合模型（一个非参数化的贝叶斯方法）。</p>
+<p><em>这篇没有详细看，涉及到 Dirichlet process，Gibbs sampling 和 variational inference，以后有时间再补充</em></p>
+<p><figure><a class="lightgallery" href="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png" title="Infinite VAE" data-thumbnail="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png" data-sub-html="<h2>Infinite VAE</h2><p>Infinite VAE</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png"
+            data-srcset="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png 1.5x, https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png 2x"
+            data-sizes="auto"
+            alt="https://gitee.com/miraclefish/picgo/raw/master/notebookPic/20211201193316.png" />
+    </a><figcaption class="image-caption">Infinite VAE</figcaption>
+    </figure></p>
+<h4 id="disentangled-vae">Disentangled VAE</h4>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-11-05</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/semisupervisedlearning/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://miraclefish.github.io/semisupervisedlearning/" data-title="Deep Semi-supervised Learning [A Survey]"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://miraclefish.github.io/semisupervisedlearning/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://miraclefish.github.io/semisupervisedlearning/" data-title="Deep Semi-supervised Learning [A Survey]"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://miraclefish.github.io/semisupervisedlearning/" data-title="Deep Semi-supervised Learning [A Survey]" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://miraclefish.github.io/semisupervisedlearning/" data-title="Deep Semi-supervised Learning [A Survey]"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/writing/" class="prev" rel="prev" title="For English Writing"><i class="fas fa-angle-left fa-fw"></i>For English Writing</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Fish</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"valine":{"appId":"dL4pdIhFQiLqCs9r11w7EFJT-gzGzoHsz","appKey":"CPmSD6DMmQOfPeGawhujszYE","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"我有一个问题...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Fish's Blog","id-2":"Fish's Blog"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"$$","right":"$$"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
